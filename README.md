@@ -1,1 +1,2003 @@
-# four-meme-api
+# Four Meme API
+
+Get ultra low latency Four Meme memecoin data on BNB Chain: live trades, bonding curve progress, newly created tokens, prices, OHLC, liquidity, migrations, top traders and more.
+
+The below GraphQL APIs and Streams are examples of data points you can get with Bitquery. If you have questions on other data points, reach out to [support](https://t.me/Bloxy_info).
+
+Need zero-latency BSC data? Read about our Streams and contact us for a trial: https://docs.bitquery.io/docs/streams/
+
+You may also be interested in:
+
+- [Crypto Price API ➤](https://docs.bitquery.io/docs/trading/crypto-price-api/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [BSC Pancake Swap APIs ➤](https://docs.bitquery.io/docs/blockchain/BSC/pancake-swap-api/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [BSC DEX Trades ➤](https://docs.bitquery.io/docs/blockchain/BSC/bsc-dextrades/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [PumpFun API ➤](https://docs.bitquery.io/docs/blockchain/Solana/Pumpfun/Pump-Fun-API/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<head>
+<meta name="title" content="Four Meme API - Live Trades, Bonding Curve, Prices, Liquidity on BSC"/>
+
+<meta
+  name="description"
+  content="Ultra low latency Four Meme memecoin data on BNB Chain: live trades, bonding curve progress, new tokens, prices, OHLC, liquidity, migrations, top traders. Access via GraphQL, streams, and Kafka."
+/>
+
+<meta
+  name="keywords"
+  content="Four Meme API,four meme bsc api,four meme trading api,four meme bonding curve api,four meme prices api,four meme liquidity api,four meme ohlc api,four meme memecoin api,bnb chain meme api,bsc meme token api,bitquery four meme api,real-time bsc trades,bsc websocket api,crypto trading api,blockchain market data api,memecoin analytics"
+/>
+
+<meta name="robots" content="index, follow" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="language" content="English" />
+
+<!-- Open Graph / Facebook -->
+
+<meta property="og:type" content="website" />
+
+<meta
+  property="og:title"
+  content="Four Meme API - BSC - Live Trades, Bonding Curve, Prices"
+/>
+
+<meta
+  property="og:description"
+  content="Get Four Meme data on BNB Chain: trades, bonding curve progress, prices, liquidity, new tokens, migrations, and more."
+/>
+
+<!-- Twitter -->
+
+<meta property="twitter:card" content="summary_large_image" />
+
+<meta
+  property="twitter:title"
+  content="Four Meme API - BSC - Live Trades, Bonding Curve, Prices"
+/>
+
+<meta property="twitter:description" content="Get Four Meme data on BNB Chain: trades, bonding curve progress, prices, liquidity, new tokens, migrations, and more." />
+</head>
+
+::::note
+To query or stream data via GraphQL outside the Bitquery IDE, you need to generate an API access token.
+
+Follow the steps here to create one: https://docs.bitquery.io/docs/authorisation/how-to-generate/
+::::
+
+---
+
+### Table of Contents
+
+### 1. Four Meme Trading & Market Data (BSC)
+
+- [Subscribe the Latest Trades on Four Meme ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#subscribe-the-latest-trades-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Get Latest Buys and Sells for a Four Meme Token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-latest-buys-and-sells-for-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Get Trade Metrics of a Four Meme Token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-trade-metrics-of-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Get latest price of a Four.meme token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-latest-price-of-a-fourmeme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Get Price Change Percentage for a Four Meme Token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-price-change-percentage-for-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Get OHLCV data of a Four Meme Token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-ohlcv-data-of-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Get Trade Volume and Number of Trades for a Four Meme Token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-trade-volume-and-number-of-trades-for-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+### 2. Token Lifecycle, Liquidity & Migrations
+
+- [Get Newly Created Tokens on Four Meme ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-newly-created-tokens-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track All Four Meme Tokens That Have Migrated to Pancakeswap ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#track-all-four-meme-tokens-that-have-migrated-to-pancakeswap?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Bonding Curve Progress API for FourMeme token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#bonding-curve-progress-api-for-fourmeme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Get Four Meme Tokens which are above 95% Bonding Curve Progress ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-four-meme-tokens-which-are-above-95-bonding-curve-progress?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Get liquidity of a Four Meme token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-liquidity-of-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track Liquidity Add Events for All Tokens on Four Meme ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#track-liquidity-add-events-for-all-tokens-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track Liquidity Add Events for a Token on Four Meme ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#track-liquidity-add-events-for-a-token-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+### 3. Trader Insights
+
+- [Monitor trades of traders on Four meme ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#monitor-trades-of-traders-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track Latest and Historical Trades of a Four Meme User ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#track-latest-and-historical-trades-of-a-four-meme-user?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Top Buyers for a Token on Four Meme ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#top-buyers-for-a-token-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Top Traders of a token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#top-traders-of-a-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+### 4. Market Cap & Getting Started
+
+- [Get Market Cap of a Four Meme Token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#get-market-cap-of-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Bitquery DEX Data Access Options ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#bitquery-dex-data-access-options?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Getting Started with Bitquery ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#getting-started-with-bitquery?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+### 5. Mempool Data & Pre Confirmation Monitoring
+
+- [How Mempool Monitoring Works](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#how-mempool-monitoring-works/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Stream Four Meme Trades in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#stream-four-meme-trades-in-mempool---detect-early/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Monitor Specific Token Trades in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#monitor-specific-token-trades-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track Large Buys in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#track-large-buys-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track Large Sells in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#track-large-sells-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Stream Four Meme Token Creation in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#stream-four-meme-token-creation-in-mempool---be-first/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Monitor Token Launches with Metadata ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#monitor-token-launches-with-metadata/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track Liquidity Add Events in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#track-liquidity-add-events-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Monitor Token Migrations to PancakeSwap ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#monitor-token-migrations-to-pancakeswap-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track Bonding Curve Completion in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#track-bonding-curve-completion-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Monitor Wallet Activity in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#monitor-wallet-activity-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Track Smart Money Trades in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#track-smart-money-trades-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Detect Potential Rug Pulls in Mempool ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-mempool-API/#detect-potential-rug-pulls-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+### 6. Video Tutorials
+
+- [Video Tutorial | How to get Bonding Curve Progress of any Four Meme Token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#video-tutorial--how-to-get-bonding-curve-progress-of-any-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Video Tutorial | How to track the Four Meme Tokens which are about to Graduate in Realtime ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#video-tutorial--how-to-track-the-four-meme-tokens-which-are-about-to-graduate-in-realtime?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Video Tutorial | How to get Liquidity of a Four Meme Token ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#video-tutorial--how-to-get-liquidity-of-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Video Tutorial | How to get Top Traders of a Four Meme Token on Solana Four Meme DEX ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#video-tutorial--how-to-get-top-traders-of-a-four-meme-token-on-solana-four-meme-dex?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Video Tutorial | How to Get the OHLCV Data of a token on Four Meme DEX ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#video-tutorial--how-to-get-the-ohlcv-data-of-a-token-on-four-meme-dex?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+### 7. Real World Projects
+
+- [Real World Projects with Four Meme API ➤](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#real-world-projects-with-four-meme-api?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+## Bitquery DEX Data Access Options
+
+- **GraphQL APIs**: Query historical and real-time EVM data with flexible filtering and aggregation
+- **Real-time Streams**: Subscribe to live EVM blockchain events via WebSocket subscriptions
+- **Cloud Solutions**: Access EVM data through AWS, GCP, and Snowflake integrations
+- **Kafka Streams**: High-throughput data streaming for enterprise applications
+
+## Getting Started with Bitquery:
+
+- [Learning Track](https://docs.bitquery.io/docs/start/learning-path/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc): Learning track to get started with Bitquery GraphQL APIs and streams.
+- [BSC DEX Trades](https://docs.bitquery.io/docs/blockchain/BSC/bsc-dextrades/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc): Real time DEX Trading data via examples.
+- [BSC Uniswap APIs](https://docs.bitquery.io/docs/blockchain/BSC/bsc-uniswap-api/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc): Uniswap Trades on BSC network with the help of examples.
+- [BSC Pancake Swap APIs](https://docs.bitquery.io/docs/blockchain/BSC/pancake-swap-api/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc): Pancake swap Trades on BSC network with the help of examples.
+- [Trade APIs](https://docs.bitquery.io/docs/trading/crypto-price-api/examples/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc): Multi-chain Trade API Examples.
+
+## Track All Four Meme Tokens That Have Migrated to Pancakeswap
+
+This query tracks four meme token migrations to Pancakeswap in realtime by monitoring transactions sent to the Four Meme factory address (`0x5c952063c7fc8610ffdb798152d69f0b9550762b`) and filtering for `PairCreated` and `PoolCreated` events. These events are emitted when a token graduates from Four Meme and migrates to Pancakeswap. Test it [here](https://ide.bitquery.io/four-meme-migration-to-pancakeswap?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc) {
+    Events(
+      where: {
+        Log: { Signature: { Name: { in: ["PairCreated"] } } }
+        Transaction: {
+          To: { is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b" }
+        }
+      }
+    ) {
+      Arguments {
+        Name
+        Value {
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+        }
+      }
+      Transaction {
+        Hash
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Bonding Curve Progress API for FourMeme token
+
+Below query will give you amount of `left tokens` put it in the below given simplied formulae and you will get Bonding Curve progress for the token.
+
+### Bonding Curve Progress Formula
+
+- **Formula**:
+  BondingCurveProgress = 100 - ((leftTokens \* 100) / initialRealTokenReserves)
+
+Where:
+
+- leftTokens = realTokenReserves - reservedTokens
+- initialRealTokenReserves = totalSupply - reservedTokens
+
+- **Definitions**:
+  - `initialRealTokenReserves` = `totalSupply` - `reservedTokens`
+    - `totalSupply`: 1,000,000,000 (Four meme Token)
+    - `reservedTokens`: 200,000,000
+    - Therefore, `initialRealTokenReserves`: 800,000,000
+  - `leftTokens` = `realTokenReserves` - `reservedTokens`
+    - `realTokenReserves`: Token balance at the market address.
+
+:::note
+**Simplified Formula**:
+BondingCurveProgress = 100 - (((balance - 200000000) \* 100) / 800000000)
+:::
+
+### Additional Notes
+
+- **Balance Retrieval**:
+  - The `balance` is the four meme token balance at this Four Meme: Proxy address (0x5c952063c7fc8610FFDB798152D69F0B9550762b).
+  - Use this query to fetch the balance: [Query Link](https://ide.bitquery.io/Get-balance-of-an-address-for-a-specified-currency_1?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+```graphql
+query MyQuery($token: String) {
+  EVM(dataset: combined, network: bsc) {
+    BalanceUpdates(
+      where: {BalanceUpdate: {Address: {is: "0x5c952063c7fc8610FFDB798152D69F0B9550762b"}}, Currency: {SmartContract: {is: $token}}}
+      orderBy: {descendingByField: "balance"}
+    ) {
+      Currency {
+        Name
+      }
+      balance: sum(of: BalanceUpdate_Amount)
+      BalanceUpdate {
+        Address
+      }
+    }
+  }
+}
+```
+</details>
+
+<details>
+  <summary>Click to expand Query Varibles (Paste this in variables section on IDE)</summary>
+```json
+{
+  "token": "0x13378bcbbc386eea99f09bc716f2c80979484444"
+}
+```
+</details>
+
+## Get Four Meme Tokens which are above 95% Bonding Curve Progress
+
+Using the above Bonding Curve formula, we can calculate the token balances for the Four Meme Proxy contract (0x5c952063c7fc8610FFDB798152D69F0B9550762b) corresponding to approximately 95% to 100% progress along the bonding curve, that comes out to be `200,000,000` to `240,000,000`. The tokens in the response are arranged in the ascending order of Bonding Curve Percentage, i.e., 95% to 100%. You can run and test the saved query [here](https://ide.bitquery.io/Four-Meme-Tokens-between-95-and-100-bonding-curve-progress?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+query MyQuery {
+  EVM(dataset: combined, network: bsc) {
+    BalanceUpdates(
+      limit: { count: 10 }
+      where: {
+        BalanceUpdate: {
+          Address: { is: "0x5c952063c7fc8610FFDB798152D69F0B9550762b" }
+        }
+      }
+      orderBy: { descendingByField: "balance" }
+    ) {
+      Currency {
+        SmartContract
+        Name
+      }
+      balance: sum(
+        of: BalanceUpdate_Amount
+        selectWhere: { ge: "200000000", le: "240000000" }
+      )
+      BalanceUpdate {
+        Address
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Get Newly Created Tokens on Four Meme
+
+[Run Query](https://ide.bitquery.io/track-Four-meme-token-creation-using-events?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+This query retrieves newly created tokens on Four Meme by listening to the `TokenCreate` event. The response provides:
+
+**Token Information:**
+
+- **creator**: Wallet address of the token creator
+- **token**: Contract address of the newly created token
+- **name**: Token name
+- **symbol**: Token symbol/ticker
+- **totalSupply**: Total supply (always 1 billion tokens)
+
+**Launch Details:**
+
+- **requestId**: Unique identifier for the token creation
+- **launchTime**: Unix timestamp of when the token launched
+- **launchFee**: Fee paid
+
+ <details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+{
+  EVM(dataset: realtime, network: bsc) {
+    Events(
+      where: {
+        Transaction: {
+          To: { is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b" }
+        }
+        Log: { Signature: { Name: { is: "TokenCreate" } } }
+      }
+      limit: { count: 10 }
+      orderBy: { descending: Block_Time }
+    ) {
+      Log {
+        Signature {
+          Name
+          Signature
+        }
+      }
+      Arguments {
+        Value {
+          ... on EVM_ABI_Integer_Value_Arg {
+            integer
+          }
+          ... on EVM_ABI_Boolean_Value_Arg {
+            bool
+          }
+          ... on EVM_ABI_Bytes_Value_Arg {
+            hex
+          }
+          ... on EVM_ABI_BigInt_Value_Arg {
+            bigInteger
+          }
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+          ... on EVM_ABI_String_Value_Arg {
+            string
+          }
+        }
+        Name
+        Type
+      }
+      Transaction {
+        Hash
+        To
+        From
+      }
+    }
+  }
+}
+```
+
+</details>
+
+You can refer to this [example](https://docs.bitquery.io/docs/blockchain/BSC/four-meme-api/#subscribe-the-latest-trades-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc) to track latest trades of a token on other particular DEX's such as Pancake Swap.
+
+## Subscribe the Latest Trades on Four Meme
+
+Using subscriptions you can subscribe to the latest trades on Four Meme as shown in this [example](https://ide.bitquery.io/Latest-trades-on-fourmeme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc). The subscription returns latest trade info such as buyers and sellers, buy and sell currency details and amount of currency.
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc) {
+    DEXTrades(
+      where: { Trade: { Dex: { ProtocolName: { is: "fourmeme_v1" } } } }
+    ) {
+      Trade {
+        Buy {
+          Buyer
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+        }
+        Sell {
+          Seller
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+        }
+      }
+      Transaction {
+        Hash
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Get Latest Buys and Sells for a Four Meme Token
+
+[This](https://ide.bitquery.io/Latest-buys-and-sells-for-a-four-meme-coin_1?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc) query retrieves the most recent token buy and sell trades of a specific token on Four Meme Exchange.
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+query MyQuery($currency: String) {
+  EVM(network: bsc, dataset: combined) {
+    buys: DEXTrades(
+      where: {
+        Trade: {
+          Buy: { Currency: { SmartContract: { is: $currency } } }
+          Success: true
+          Dex: { ProtocolName: { is: "fourmeme_v1" } }
+        }
+      }
+      orderBy: { descending: Block_Time }
+    ) {
+      Block {
+        Time
+      }
+      Trade {
+        Buy {
+          Amount
+          Buyer
+          Price
+          PriceInUSD
+          Seller
+        }
+        Sell {
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+        }
+      }
+    }
+    sells: DEXTrades(
+      where: {
+        Trade: {
+          Sell: { Currency: { SmartContract: { is: $currency } } }
+          Success: true
+          Dex: { ProtocolName: { is: "fourmeme_v1" } }
+        }
+      }
+      orderBy: { descending: Block_Time }
+    ) {
+      Block {
+        Time
+      }
+      Trade {
+        Buy {
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+        }
+        Sell {
+          Amount
+          Buyer
+          Price
+          PriceInUSD
+          Seller
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "currency": "0x9b48a54bcce09e59b0479060e9328ab7dbdb0d40"
+}
+```
+
+</details>
+
+You can also check if the token is listed on other DEX using this [example](https://docs.bitquery.io/docs/blockchain/BSC/bsc-dextrades/#get-all-dexs-where-a-specific-token-is-listed?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+## Get Trade Metrics of a Four Meme Token
+
+Use the below query to get trade metrics like volume and trades for a token in different time frames, such as `24 hours`, `1 hour` and `5 minutes`. Test it [here](https://ide.bitquery.io/volume-and-trades-for-a-token-in-different-time-frames_3?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+query MyQuery($currency: String) {
+  EVM(network: bsc) {
+    DEXTradeByTokens(
+      where: {
+        Trade: { Currency: { SmartContract: { is: $currency } }, Success: true }
+        Block: { Time: { since_relative: { hours_ago: 24 } } }
+      }
+    ) {
+      Trade {
+        Currency {
+          Name
+          Symbol
+          SmartContract
+        }
+      }
+      volume_24hr: sum(of: Trade_Side_AmountInUSD)
+      volume_1hr: sum(
+        of: Trade_Side_AmountInUSD
+        if: { Block: { Time: { since_relative: { hours_ago: 1 } } } }
+      )
+      volume_5min: sum(
+        of: Trade_Side_AmountInUSD
+        if: { Block: { Time: { since_relative: { minutes_ago: 5 } } } }
+      )
+      trades_24hr: count
+      trades_1hr: count(
+        if: { Block: { Time: { since_relative: { hours_ago: 1 } } } }
+      )
+      trades_5min: count(
+        if: { Block: { Time: { since_relative: { minutes_ago: 5 } } } }
+      )
+    }
+  }
+}
+```
+
+```json
+{
+  "currency": "0x9b48a54bcce09e59b0479060e9328ab7dbdb0d40"
+}
+```
+
+</details>
+
+## Get latest price of a Four.meme token
+
+We launched the [Price Index](https://docs.bitquery.io/docs/trading/crypto-price-api/introduction/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc) in August 2025, allowing you to track price of any token trading onchain.
+Here's an example of [tracking Four.meme token prices](https://ide.bitquery.io/latest-token-price-on-four-meme-dex?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```
+{
+  Trading {
+    Pairs(
+      where: {Price: {IsQuotedInUsd: false}, Market: {Network: {is: "Binance Smart Chain"}, Program: {is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b"}}, Token: {Address: {is: "0x2157de505dfaa51676d6d22c0424551fbeaf4444"}}, Interval: {Time: {Duration: {eq: 60}}}}
+      limit: {count: 1}
+      orderBy: {descending: Block_Time}
+    ) {
+      Market {
+        Address
+        Network
+        Program
+        Protocol
+        ProtocolFamily
+      }
+      Price {
+        Average {
+          ExponentialMoving
+          Mean
+          SimpleMoving
+          WeightedSimpleMoving
+        }
+        Ohlc {
+          Close
+          High
+          Low
+          Open
+        }
+      }
+      Token {
+        Address
+        Name
+        Symbol
+      }
+      QuoteToken {
+        Address
+        Name
+        Symbol
+      }
+      Volume {
+        Base
+        Usd
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Get Price Change Percentage for a Four Meme Token
+
+Use the below query to get the price change in percentage for various time fields including `24 hours`, `1 hour` and `5 minutes`. Try it [here](https://ide.bitquery.io/Percentage-price-change-for-a-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+query MyQuery($currency: String) {
+  EVM(network: bsc) {
+    DEXTradeByTokens(
+      where: {
+        Trade: { Currency: { SmartContract: { is: $currency } }, Success: true }
+        Block: { Time: { since_relative: { hours_ago: 24 } } }
+      }
+    ) {
+      Trade {
+        Currency {
+          Name
+          Symbol
+          SmartContract
+        }
+        price_24hr: PriceInUSD(minimum: Block_Time)
+        price_1hr: PriceInUSD(
+          if: { Block: { Time: { is_relative: { hours_ago: 1 } } } }
+        )
+        price_5min: PriceInUSD(
+          if: { Block: { Time: { is_relative: { minutes_ago: 1 } } } }
+        )
+        current: PriceInUSD
+      }
+      change_24hr: calculate(
+        expression: "( $Trade_current - $Trade_price_24hr ) / $Trade_price_24hr * 100"
+      )
+      change_1hr: calculate(
+        expression: "( $Trade_current - $Trade_price_1hr ) / $Trade_price_1hr * 100"
+      )
+      change_5min: calculate(
+        expression: "( $Trade_current - $Trade_price_5min ) / $Trade_price_5min * 100"
+      )
+    }
+  }
+}
+```
+
+```json
+{
+  "currency": "0x9b48a54bcce09e59b0479060e9328ab7dbdb0d40"
+}
+```
+
+</details>
+
+## Get OHLCV data of a Four Meme Token
+
+Use the below query to get four meme token OHLCV data. Test it [here](https://ide.bitquery.io/OHLC-for-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+query tradingView($network: evm_network, $token: String) {
+  EVM(network: $network, dataset: combined) {
+    DEXTradeByTokens(
+      limit: { count: 10 }
+      orderBy: { descendingByField: "Block_Time" }
+      where: {
+        Trade: {
+          Currency: { SmartContract: { is: $token } }
+          PriceAsymmetry: { lt: 0.1 }
+          Dex: { ProtocolName: { is: "fourmeme_v1" } }
+        }
+      }
+    ) {
+      Block {
+        Time(interval: { count: 5, in: minutes })
+      }
+      Trade {
+        open: PriceInUSD(minimum: Block_Number)
+        close: PriceInUSD(maximum: Block_Number)
+        max: PriceInUSD(maximum: Trade_PriceInUSD)
+        min: PriceInUSD(minimum: Trade_PriceInUSD)
+      }
+      volumeUSD: sum(of: Trade_Side_AmountInUSD, selectWhere: { gt: "0" })
+    }
+  }
+}
+```
+
+```json
+{
+  "network": "bsc",
+  "token": "0x9b48a54bcce09e59b0479060e9328ab7dbdb0d40"
+}
+```
+
+</details>
+
+## Monitor trades of traders on Four meme
+
+You can use our streams to monitor real time trades of a trader on Four Meme, for example run [this stream](https://ide.bitquery.io/monitor-trades-of-a-trader-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc) {
+    DEXTrades(
+      where: {
+        Trade: { Dex: { ProtocolName: { is: "fourmeme_v1" } }, Success: true }
+        Transaction: {
+          From: { is: "0x7db00d1f5b8855d40827f34bb17f95d31990306e" }
+        }
+      }
+    ) {
+      Trade {
+        Buy {
+          Buyer
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          Price
+          PriceInUSD
+        }
+        Sell {
+          Seller
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+        }
+      }
+      Transaction {
+        Hash
+      }
+    }
+  }
+}
+```
+
+</details>
+
+You can also get the trade activities of a user on Pancake Swap using our [Pancake Swap](https://docs.bitquery.io/docs/blockchain/BSC/pancake-swap-api/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc) APIs.
+
+## Track Four Meme Tokens in 14k to 18k Marketcap
+
+Tracks live Four Meme tokens on BSC with a market cap between $14K–$18K, filtered by 14k to 18k Marketcap.
+Useful for spotting emerging small-cap meme tokens in real time.
+Try the query [here](https://ide.bitquery.io/Four-meme-tokens-in-14K-to-17K-Marketcap?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  Trading {
+    Pairs(
+      where: {
+        Interval: { Time: { Duration: { eq: 1 } } }
+        Price: {
+          IsQuotedInUsd: true
+          Average: { Mean: { gt: 0.000014, le: 0.000018 } }
+        }
+        Market: {
+          Protocol: { is: "fourmeme_v1" }
+          Network: { is: "Binance Smart Chain" }
+        }
+        Volume: { Usd: { gt: 5 } }
+      }
+    ) {
+      Token {
+        Name
+        Symbol
+        Address
+      }
+      Market {
+        Protocol
+        Program
+        Network
+        Name
+        Address
+      }
+      Block {
+        Date
+        Time
+        Timestamp
+      }
+      Interval {
+        Time {
+          Start
+          Duration
+          End
+        }
+      }
+      Volume {
+        Base
+        Quote
+        Usd
+      }
+      marketcap: calculate(expression: "Price_Average_Mean * 1000000000")
+      Price {
+        Average {
+          Mean
+        }
+        Ohlc {
+          Close
+          High
+          Low
+          Open
+        }
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Track Latest and Historical Trades of a Four Meme User
+
+You can use DEX Trades API with combined dataset to get latest and historic trades of a user. Run [this query](https://ide.bitquery.io/Get-all-trades-of-a-trader-on-four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc) for example.
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+query MyQuery($address: String) {
+  EVM(dataset: combined, network: bsc) {
+    DEXTrades(
+      where: {
+        Trade: { Dex: { ProtocolName: { is: "fourmeme_v1" } }, Success: true }
+        Transaction: { From: { is: $address } }
+      }
+      orderBy: { descending: Block_Time }
+    ) {
+      Block {
+        Time
+      }
+      Trade {
+        Buy {
+          Buyer
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          Price
+          PriceInUSD
+        }
+        Sell {
+          Seller
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+        }
+      }
+      Transaction {
+        Hash
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "address": "0x7db00d1f5b8855d40827f34bb17f95d31990306e"
+}
+```
+
+</details>
+
+## Top Buyers for a Token on Four Meme
+
+[This](https://ide.bitquery.io/Top-buyers-of-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc) query returns top buyers of a particular token on Four Meme, with currency smart contract as `0x9b48a54bcce09e59b0479060e9328ab7dbdb0d40` for this example.
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+query MyQuery($currency: String) {
+  EVM(network: bsc, dataset: combined) {
+    DEXTrades(
+      where: {
+        Trade: {
+          Buy: { Currency: { SmartContract: { is: $currency } } }
+          Success: true
+          Dex: { ProtocolName: { is: "fourmeme_v1" } }
+        }
+      }
+      limit: { count: 100 }
+    ) {
+      Trade {
+        Buy {
+          Buyer
+        }
+      }
+      trades: count
+      bought: sum(of: Trade_Buy_Amount)
+    }
+  }
+}
+```
+
+```json
+{
+  "currency": "0x9b48a54bcce09e59b0479060e9328ab7dbdb0d40"
+}
+```
+
+</details>
+
+## Get Trade Volume and Number of Trades for a Four Meme Token
+
+[This](https://ide.bitquery.io/volume-and-trades-for-a-token-in-different-time-frames_1?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc) query returns the traded volume and number of trades for a particular Four Meme token in different time frames, namely 24 hours, 1 hour and 5 minutes.
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+query MyQuery(
+  $currency: String
+  $time_24hr_ago: DateTime
+  $time_1hr_ago: DateTime
+  $time_5min_ago: DateTime
+) {
+  EVM(network: bsc) {
+    DEXTradeByTokens(
+      where: {
+        Trade: { Currency: { SmartContract: { is: $currency } }, Success: true }
+        Block: { Time: { since: $time_24hr_ago } }
+      }
+    ) {
+      Trade {
+        Currency {
+          Name
+          Symbol
+          SmartContract
+        }
+      }
+      volume_24hr: sum(of: Trade_Side_AmountInUSD)
+      volume_1hr: sum(
+        of: Trade_Side_AmountInUSD
+        if: { Block: { Time: { since: $time_1hr_ago } } }
+      )
+      volume_5min: sum(
+        of: Trade_Side_AmountInUSD
+        if: { Block: { Time: { since: $time_5min_ago } } }
+      )
+      trades_24hr: count
+      trades_1hr: count(if: { Block: { Time: { since: $time_1hr_ago } } })
+      trades_5min: count(if: { Block: { Time: { since: $time_5min_ago } } })
+    }
+  }
+}
+```
+
+```json
+{
+  "currency": "0x9b48a54bcce09e59b0479060e9328ab7dbdb0d40",
+  "time_24hr_ago": "2024-03-23T15:00:00Z",
+  "time_1hr_ago": "2024-03-24T14:00:00Z",
+  "time_5min_ago": "2024-03-24T15:55:00Z"
+}
+```
+
+</details>
+
+## Get Realtime Market Cap and Price of a Four Meme Token
+
+To get the market cap of a token we need two things, the latest `PriceInUSD` and `total supply` of the token. Total Supply is 1,000,000,000 (1B) for four meme tokens so we just need to get price and multiply it with 1B. [This](https://ide.bitquery.io/Real-Time-Marektcap-and-price-of-a-four-meme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc) query helps with getting the latest USD price of a token and hence its latest Marketcap.
+
+```
+Market Cap = Total Supply * PriceInUSD
+```
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  Trading {
+    Pairs(
+      where: {
+        Interval: { Time: { Duration: { eq: 1 } } }
+        Price: { IsQuotedInUsd: true }
+        Market: {
+          Protocol: { is: "fourmeme_v1" }
+          Network: { is: "Binance Smart Chain" }
+        }
+        Volume: { Usd: { gt: 5 } }
+        Token: { Address: { is: "0xf5bc78c8c762e4003742dacc31f3ba7091be4444" } }
+      }
+    ) {
+      Token {
+        Name
+        Symbol
+        Address
+      }
+      Market {
+        Protocol
+        Program
+        Network
+        Name
+        Address
+      }
+      Block {
+        Date
+        Time
+        Timestamp
+      }
+      Interval {
+        Time {
+          Start
+          Duration
+          End
+        }
+      }
+      Volume {
+        Base
+        Quote
+        Usd
+      }
+      marketcap: calculate(expression: "Price_Average_Mean * 1000000000")
+      Price {
+        Average {
+          Mean
+        }
+        Ohlc {
+          Close
+          High
+          Low
+          Open
+        }
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Track Liquidity Add Events for All Tokens on Four Meme
+
+This query tracks all liquidity addition events on the Four Meme Exchange. It listens for `LiquidityAdded` events emitted from the four meme exchange's smart contract (0x5c952063c7fc8610ffdb798152d69f0b9550762b)
+
+You can run the query [here](https://ide.bitquery.io/Liquidity-Added-to-specific-tokens-on-Four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```
+{
+  EVM(dataset: realtime, network: bsc) {
+    Events(
+      limit: {count: 20}
+      where: {LogHeader: {Address: {is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b"}},
+        Log: {Signature: {Name: {is: "LiquidityAdded"}}}}
+    ) {
+      Block {
+        Time
+        Number
+        Hash
+      }
+      Receipt {
+        ContractAddress
+      }
+      Topics {
+        Hash
+      }
+      TransactionStatus {
+        Success
+      }
+      LogHeader {
+        Address
+        Index
+        Data
+      }
+      Transaction {
+        Hash
+        From
+        To
+      }
+      Log {
+        EnterIndex
+        ExitIndex
+        Index
+        LogAfterCallIndex
+        Pc
+        SmartContract
+        Signature {
+          Name
+          Signature
+        }
+      }
+      Arguments {
+        Name
+        Value {
+          ... on EVM_ABI_Integer_Value_Arg {
+            integer
+          }
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+          ... on EVM_ABI_String_Value_Arg {
+            string
+          }
+          ... on EVM_ABI_BigInt_Value_Arg {
+            bigInteger
+          }
+          ... on EVM_ABI_Bytes_Value_Arg {
+            hex
+          }
+          ... on EVM_ABI_Boolean_Value_Arg {
+            bool
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+
+</details>
+
+## Track Liquidity Add Events for a Token on Four Meme
+
+This query tracks liquidity addition events for a specific token on the Four Meme Exchange. It listens for `LiquidityAdded` events emitted from the exchange's smart contract (`0x5c952063c7fc8610ffdb798152d69f0b9550762b`) BNB network
+
+In this example, the query monitors liquidity events for a specific token (`0x5a49ce64a1e44f6fce07e9ff38f54dde8a8a0e94`) by filtering the event arguments to only include actions related to this token.
+
+You can run the query [here](https://ide.bitquery.io/Liquidity-Added-to-specific-tokens-on-Four-meme?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```
+{
+  EVM(dataset: realtime, network: bsc) {
+    Events(
+      limit: {count: 20}
+      where: {LogHeader: {Address: {is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b"}}, Log: {Signature: {Name: {is: "LiquidityAdded"}}}, Arguments: {includes: {Name: {is: "token1"}, Value: {Address: {is: "0x5a49ce64a1e44f6fce07e9ff38f54dde8a8a0e94"}}}}}
+    ) {
+      Block {
+        Time
+        Number
+        Hash
+      }
+      Receipt {
+        ContractAddress
+      }
+      Topics {
+        Hash
+      }
+      TransactionStatus {
+        Success
+      }
+      LogHeader {
+        Address
+        Index
+        Data
+      }
+      Transaction {
+        Hash
+        From
+        To
+      }
+      Log {
+        EnterIndex
+        ExitIndex
+        Index
+        LogAfterCallIndex
+        Pc
+        SmartContract
+        Signature {
+          Name
+          Signature
+        }
+      }
+      Arguments {
+        Name
+        Value {
+          ... on EVM_ABI_Integer_Value_Arg {
+            integer
+          }
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+          ... on EVM_ABI_String_Value_Arg {
+            string
+          }
+          ... on EVM_ABI_BigInt_Value_Arg {
+            bigInteger
+          }
+          ... on EVM_ABI_Bytes_Value_Arg {
+            hex
+          }
+          ... on EVM_ABI_Boolean_Value_Arg {
+            bool
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+
+</details>
+
+## Top Traders of a token
+
+This query will fetch you top traders of a Four Meme token for the BSC network.
+You can test the query [here](https://ide.bitquery.io/top-traders-of-a-four-meme-token_1?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```
+query topTraders($network: evm_network, $token: String) {
+  EVM(network: $network, dataset: combined) {
+    DEXTradeByTokens(
+      orderBy: {descendingByField: "volumeUsd"}
+      limit: {count: 100}
+      where: {Trade: {Currency: {SmartContract: {is: $token}}, Dex: {ProtocolName: {is: "fourmeme_v1"}}}}
+    ) {
+      Trade {
+        Buyer
+        Dex {
+          OwnerAddress
+          ProtocolFamily
+          ProtocolName
+        }
+      }
+      buyVolume: sum(of: Trade_Amount, if: {Trade: {Side: {Type: {is: buy}}}})
+      sellVolume: sum(of: Trade_Amount, if: {Trade: {Side: {Type: {is: sell}}}})
+      volume: sum(of: Trade_Amount)
+      volumeUsd: sum(of: Trade_Side_AmountInUSD)
+    }
+  }
+}
+{
+  "network": "bsc",
+  "token": "0x37e3a59843b056e063780402ef25e12dca394444"
+}
+```
+
+</details>
+
+## Get liquidity of a Four Meme token
+
+Using below API you can get the liquidity of a four meme token. Subtract `200000000` from the Balance that this query returns because 200M tokens are reserved which gets transferred to pancakeswap when this fourmeme token graduates. Test the API [here](https://ide.bitquery.io/Get-liquidity-of-a-fourmeme-token?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc).
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```
+query MyQuery {
+  EVM(dataset: combined, network: bsc) {
+    BalanceUpdates(
+      where: {BalanceUpdate: {Address: {is: "0x5c952063c7fc8610FFDB798152D69F0B9550762b"}}, Currency: {SmartContract: {is: "0x87c5b3da05b062480b55c2dbf374ccd084f74444"}}}
+      orderBy: {descendingByField: "balance"}
+    ) {
+      Currency {
+        Name
+      }
+      balance: sum(of: BalanceUpdate_Amount)
+      BalanceUpdate {
+        Address
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## How Mempool Monitoring Works
+
+When a transaction is broadcasted to the BSC network but not yet included in a block, Bitquery captures and processes it through mempool monitoring:
+
+- **Transaction Simulation**: The transaction is executed in the EVM using the current pending block context
+- **Data Extraction**: The system captures the simulated receipt, trace, and event logs
+- **Real-time Streaming**: Data is made available instantly through GraphQL subscriptions and Kafka streams
+- **Block Context**: Each batch of simulated transactions includes the block header used as execution context
+
+**Why Monitor Mempool?**
+
+- **First-mover Advantage**: Detect opportunities before they're confirmed on-chain
+- **MEV Opportunities**: Identify profitable front-running and back-running opportunities
+- **Sniper Bots**: Be first to trade newly launched tokens
+- **Risk Management**: Detect large sells or potential rug pulls before execution
+- **Market Intelligence**: Monitor smart money and whale activity in real-time
+
+:::tip
+We provide both GraphQL streams (easy to use) and Kafka streams (ultra-low latency) for mempool monitoring. For production MEV and sniper bots, we recommend Kafka streams.
+
+Read more: [Kafka Protobuf Streams for EVM ➤](https://docs.bitquery.io/docs/streams/protobuf/chains/EVM-protobuf/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+:::
+
+---
+
+## Stream Four Meme Trades in Mempool - Detect Early
+
+Monitor all Four Meme DEX trades in real-time as they appear in the mempool, before they are confirmed on-chain. This allows you to detect trading opportunities early and execute front-run or back-run strategies.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-mempool-trades/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    DEXTrades(
+      where: { Trade: { Dex: { ProtocolName: { is: "fourmeme_v1" } } } }
+    ) {
+      Trade {
+        Buy {
+          Buyer
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          Price
+          PriceInUSD
+        }
+        Sell {
+          Seller
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          Price
+          PriceInUSD
+        }
+        Dex {
+          ProtocolName
+          ProtocolFamily
+        }
+      }
+      Transaction {
+        Hash
+        From
+        To
+        Gas
+        GasPrice
+      }
+      Block {
+        Time
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Monitor Specific Token Trades in Mempool
+
+Track pending trades for a specific Four Meme token. Perfect for monitoring price impact before large trades execute.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-specific-token-mempool-trades_3/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription($token: String) {
+  EVM(network: bsc mempool:true) {
+    DEXTrades(
+      where: {Trade:{Dex:{ProtocolFamily:{is:"FourMeme"}}} any:[{Trade:{Buy:{Currency:{SmartContract:{is:$token}}}}},{Trade:{Sell:{Currency:{SmartContract:{is:$token}}}}}]}
+    ) {
+      Block{
+        Time
+      }
+      Trade {
+        Buy {
+          Buyer
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          Price
+          PriceInUSD
+        }
+        Dex{
+          ProtocolFamily
+        }
+        Sell {
+          Seller
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          PriceInUSD
+        }
+      }
+      Transaction {
+        Hash
+        From
+        Gas
+        GasPrice
+      }
+    }
+  }
+}
+{
+  "token": "0x444416a582466fdae0f2fcdf0a859675f8ff6e9f"
+}
+```
+
+</details>
+
+## Track Large Buys in Mempool
+
+Monitor large buy orders in the mempool to detect whale activity and potential price pumps.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-large-buys-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    DEXTrades(
+      where: {
+        Trade: {
+          Dex: { ProtocolName: { is: "fourmeme_v1" } }
+          Buy: { AmountInUSD: { gt: "1000" } }
+        }
+      }
+    ) {
+      Trade {
+        Buy {
+          Buyer
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          AmountInUSD
+          Price
+          PriceInUSD
+        }
+        Sell {
+          Currency {
+            Name
+            Symbol
+          }
+          Amount
+        }
+      }
+      Transaction {
+        Hash
+        From
+        Gas
+        GasPrice
+      }
+      Block {
+        Time
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Track Large Sells in Mempool
+
+Detect large sell orders before they execute to protect against price dumps.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-large-sells-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    DEXTrades(
+      where: {
+        Trade: {
+          Dex: { ProtocolName: { is: "fourmeme_v1" } }
+          Sell: { AmountInUSD: { gt: "1000" } }
+        }
+      }
+    ) {
+      Trade {
+        Buy {
+          Currency {
+            Name
+            Symbol
+          }
+          Amount
+        }
+        Sell {
+          Seller
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          AmountInUSD
+          Price
+          PriceInUSD
+        }
+      }
+      Transaction {
+        Hash
+        From
+        Gas
+        GasPrice
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Stream Four Meme Token Creation in Mempool - Be First
+
+Track new Four Meme token creations in the mempool instantly. Be the absolute first to know when a new token is being created, before it's confirmed on-chain. Critical for sniper bots.
+
+[Run Stream ➤](https://ide.bitquery.io/track-Four-meme-token-creation-in-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    Events(
+      where: {
+        Transaction: {
+          To: { is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b" }
+        }
+        Log: { Signature: { Name: { is: "TokenCreate" } } }
+      }
+    ) {
+      Log {
+        Signature {
+          Name
+          Signature
+        }
+      }
+      Arguments {
+        Value {
+          ... on EVM_ABI_Integer_Value_Arg {
+            integer
+          }
+          ... on EVM_ABI_Boolean_Value_Arg {
+            bool
+          }
+          ... on EVM_ABI_Bytes_Value_Arg {
+            hex
+          }
+          ... on EVM_ABI_BigInt_Value_Arg {
+            bigInteger
+          }
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+          ... on EVM_ABI_String_Value_Arg {
+            string
+          }
+        }
+        Name
+        Type
+      }
+      Transaction {
+        Hash
+        To
+        From
+        Gas
+        GasPrice
+      }
+      Block {
+        Time
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Monitor Token Launches with Metadata
+
+Get complete token information including name, symbol, and creator details from mempool.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-token-creation-with-metadata-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    Events(
+      where: {
+        Transaction: {
+          To: { is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b" }
+        }
+        Log: { Signature: { Name: { is: "TokenCreate" } } }
+      }
+    ) {
+      Arguments {
+        Name
+        Value {
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+          ... on EVM_ABI_String_Value_Arg {
+            string
+          }
+          ... on EVM_ABI_BigInt_Value_Arg {
+            bigInteger
+          }
+        }
+      }
+      Transaction {
+        Hash
+        From
+      }
+      Block {
+        Time
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Track Liquidity Add Events in Mempool
+
+Monitor when liquidity is being added to Four Meme tokens before confirmation. Important for detecting graduation events.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-liquidity-add-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    Events(
+      where: {
+        LogHeader: {
+          Address: { is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b" }
+        }
+        Log: { Signature: { Name: { is: "LiquidityAdded" } } }
+      }
+    ) {
+      Log {
+        Signature {
+          Name
+          Signature
+        }
+      }
+      Arguments {
+        Name
+        Value {
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+          ... on EVM_ABI_BigInt_Value_Arg {
+            bigInteger
+          }
+          ... on EVM_ABI_Integer_Value_Arg {
+            integer
+          }
+        }
+      }
+      Transaction {
+        Hash
+        From
+      }
+      Block {
+        Time
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Monitor Token Migrations to PancakeSwap in Mempool
+
+Track when Four Meme tokens are graduating to PancakeSwap before the migration completes. Critical for trading strategies.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-migration-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    Events(
+      where: {
+        Log: { Signature: { Name: { in: ["PairCreated", "PoolCreated"] } } }
+        Transaction: {
+          To: { is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b" }
+        }
+      }
+    ) {
+      Log {
+        Signature {
+          Name
+          Signature
+        }
+      }
+      Arguments {
+        Name
+        Value {
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+          ... on EVM_ABI_BigInt_Value_Arg {
+            bigInteger
+          }
+        }
+      }
+      Transaction {
+        Hash
+        From
+        To
+        Gas
+        GasPrice
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Track Bonding Curve Completion in Mempool
+
+Monitor tokens that are about to complete their bonding curve (near graduation) in the mempool.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-bonding-curve-completion-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    Events(
+      where: {
+        LogHeader: {
+          Address: { is: "0x5c952063c7fc8610ffdb798152d69f0b9550762b" }
+        }
+        Log: {
+          Signature: {
+            Name: { in: ["LiquidityAdded", "TokenGraduated", "PairCreated"] }
+          }
+        }
+      }
+    ) {
+      Log {
+        Signature {
+          Name
+        }
+      }
+      Arguments {
+        Name
+        Value {
+          ... on EVM_ABI_Address_Value_Arg {
+            address
+          }
+          ... on EVM_ABI_String_Value_Arg {
+            string
+          }
+        }
+      }
+      Transaction {
+        Hash
+        From
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Monitor Wallet Activity in Mempool
+
+Track specific wallet addresses (smart money, whales, or known traders) and their pending Four Meme trades.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-wallet-monitoring-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    DEXTrades(
+      where: {
+        Trade: { Dex: { ProtocolName: { is: "fourmeme_v1" } } }
+        Transaction: {
+          From: { is: "0x7db00d1f5b8855d40827f34bb17f95d31990306e" }
+        }
+      }
+    ) {
+      Trade {
+        Buy {
+          Buyer
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          AmountInUSD
+        }
+        Sell {
+          Seller
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          AmountInUSD
+        }
+      }
+      Transaction {
+        Hash
+        From
+        Gas
+        GasPrice
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Track Smart Money Trades in Mempool
+
+Monitor multiple smart money wallets simultaneously for their Four Meme trading activity in mempool.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-smart-money-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    DEXTrades(
+      where: {
+        Trade: { Dex: { ProtocolName: { is: "fourmeme_v1" } } }
+        Transaction: {
+          From: {
+            in: [
+              "0x7db00d1f5b8855d40827f34bb17f95d31990306e"
+              "0x1234567890123456789012345678901234567890"
+              "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+            ]
+          }
+        }
+      }
+    ) {
+      Trade {
+        Buy {
+          Buyer
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          AmountInUSD
+        }
+        Sell {
+          Currency {
+            Name
+            Symbol
+          }
+          Amount
+        }
+      }
+      Transaction {
+        Hash
+        From
+      }
+    }
+  }
+}
+```
+
+</details>
+
+## Detect Potential Rug Pulls in Mempool
+
+Monitor for suspicious activity like developers selling large amounts in mempool.
+
+[Run Stream ➤](https://ide.bitquery.io/Four-Meme-rug-pull-detection-mempool/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+
+<details>
+  <summary>Click to expand GraphQL query</summary>
+
+```graphql
+subscription {
+  EVM(network: bsc, mempool: true) {
+    DEXTrades(
+      where: {
+        Trade: {
+          Dex: { ProtocolName: { is: "fourmeme_v1" } }
+          Sell: { AmountInUSD: { gt: "5000" } }
+        }
+      }
+    ) {
+      Trade {
+        Sell {
+          Seller
+          Currency {
+            Name
+            Symbol
+            SmartContract
+          }
+          Amount
+          AmountInUSD
+        }
+        Buy {
+          Currency {
+            Name
+            Symbol
+          }
+        }
+      }
+      Transaction {
+        Hash
+        From
+        Gas
+        GasPrice
+      }
+      Block {
+        Time
+      }
+    }
+  }
+}
+```
+
+</details>
+
+---
+
+## [Video Tutorial | How to get Bonding Curve Progress of any Four Meme Token](https://www.youtube.com/watch?v=D1LR535v0mI)
+
+## [Video Tutorial | How to track the Four Meme Tokens which are about to Graduate in Realtime](https://youtu.be/vbDxtoOGLm4)
+
+## [Video Tutorial | How to get Liquidity of a Four Meme Token](https://www.youtube.com/watch?v=nD1oVaJtwWo)
+
+## [Video Tutorial | How to get Top Traders of a Four Meme Token on Solana Four Meme DEX](https://www.youtube.com/watch?v=EE7wsFKj6n0)
+
+## [Video Tutorial | How to Get the OHLCV Data of a token on Four Meme DEX](https://www.youtube.com/watch?v=ZqTKDgSaYaQ)
+
+## Real World Projects with Four Meme API
+
+### Building a Four Meme Dashboard
+
+- [Tutorial](https://learnblockchain.cn/article/12532)
+- [Source Code](https://github.com/Kshitij0O7/four-meme-dashboard)
+- [Video](https://youtu.be/mwmoZAo7oFE?si=_-4n2fL-lH6la-8i)
+
+### Four Meme Sniper Bot
+
+- [Tutorial](https://docs.bitquery.io/docs/streams/sniper-trade-using-bitquery-kafka-stream/?utm_source=github&utm_medium=referral&utm_campaign=fourmeme_api_doc)
+- [Source Code](https://github.com/Kshitij0O7/evm-sniper)
+- [Video](https://youtu.be/vgOHgqTJmj0?si=yfUguMWdMtxRJMvg)
